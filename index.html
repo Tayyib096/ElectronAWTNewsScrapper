@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://bootswatch.com/5/lumen/bootstrap.min.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <title>News Scraper</title>
+
+    <script>
+      const scrape = require('./startScraping');
+      const makePDF = require('./makePdfs');
+      const convertToPdf = require('./convertToPdfs');
+      $(document).ready(function(){
+        
+        
+        function changeAlert(text,name){
+          if(text.includes('Finished') ) {
+            $('.'+name).removeClass('alert-primary');
+            $('.'+name).addClass('alert-success');
+          }else{
+            $('.'+name).addClass('alert-primary');
+            $('.'+name).removeClass('alert-success');   
+          }
+        }
+
+       $('#scrape-btn').click(()=>{
+          scrape.scrape();
+        });
+
+        $('#makePdfs-btn').click(()=>{
+          makePDF.makePDF();
+        });
+      
+        $('#convert-btn').click(()=>{
+          convertToPdf.convertToPDF();
+        });
+        
+
+
+        var progressTextshowprogress = $('#show-progress');
+        progressTextshowprogress.bind('DOMSubtreeModified', function(){
+          changeAlert(progressTextshowprogress.text().toString(),'show-progress');
+        });
+
+        var progressTextleadpakistan = $('#lead-pakistan');
+        progressTextleadpakistan.bind('DOMSubtreeModified', function(){
+          changeAlert(progressTextleadpakistan.text().toString(),'lead-pakistan');
+        });
+                
+        var progressTextpakobserver = $('#pak-observer');
+        progressTextpakobserver.bind('DOMSubtreeModified', function(){
+          changeAlert(progressTextpakobserver.text().toString(),'pak-observer');
+        });
+        
+        var progressTextarabnews = $('#arab-news');
+        progressTextarabnews.bind('DOMSubtreeModified', function(){
+          changeAlert(progressTextarabnews.text().toString(),'arab-news');
+        });
+        
+        var progressTextpakistantoday = $('#pakistan-today');
+        progressTextpakistantoday.bind('DOMSubtreeModified', function(){
+          changeAlert(progressTextpakistantoday.text().toString(),'pakistan-today');
+        });
+        
+        var progressTextkiskous = $('#kisko-us');
+        progressTextkiskous.bind('DOMSubtreeModified', function(){
+          changeAlert(progressTextkiskous.text().toString(),'kisko-us');
+        });
+
+        var progressTextkiskoin = $('#kisko-in');
+        progressTextkiskoin.bind('DOMSubtreeModified', function(){
+          changeAlert(progressTextkiskoin.text().toString(),'kisko-in');
+        });
+
+        var progressTextkiskouk = $('#kisko-uk');
+        progressTextkiskouk.bind('DOMSubtreeModified', function(){
+          changeAlert(progressTextkiskouk.text().toString(),'kisko-uk');
+        });
+        
+        var progressTextgulftimes = $('#gulf-insider');
+        progressTextkiskouk.bind('DOMSubtreeModified', function(){
+          changeAlert(progressTextkiskouk.text().toString(),'gulf-insider');
+        });
+
+
+
+      });
+    </script>
+</head>
+
+<body>
+
+    <div class="text-center">
+      <h3>Time of App Launch</h3>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <p id='date-value'></p>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <p id="time-value"></p>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <button class="btn btn-primary" id="scrape-btn">Start Scraping</button>
+      <button class="btn btn-primary" id="makePdfs-btn">Make PDFs</button>
+      <button class="btn btn-success" id="convert-btn">Convert IMG TO PDF</button>
+      
+    </div>
+
+  <div class="mt-5 mx-3 text-center">
+    <div class="show-progress alert alert-primary">
+      <p id="show-progress">Nothing to Report</p>
+    </div>
+  </div>
+
+  <p id="show-log"></p>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+  
+        <div class="mt-5 mx-3 text-center">
+          <div class="lead-pakistan alert alert-primary">
+            <h3>Lead Pakistan</h3>
+            <p id="lead-pakistan">Nothing to Report</p>
+          </div>
+        </div>
+
+      </div>
+      
+      <div class="col-sm">
+      
+        <div class="mt-5 mx-3 text-center">
+          <div class="pak-observer alert alert-primary">
+            <h3>Pak Observer</h3>
+            <p id="pak-observer">Nothing to Report</p>
+          </div>
+        </div>
+      
+      </div>
+
+
+      <div class="col-sm">
+      
+        <div class="mt-5 mx-3 text-center">
+          <div class="gulf-insider alert alert-primary">
+            <h3>Gulf Insider</h3>
+            <p id="gulf-insider">Nothing to Report</p>
+          </div>
+        </div>
+      
+      </div>
+
+
+    </div>
+
+
+
+    <div class="row">
+      <div class="col-sm">
+  
+        <div class="mt-5 mx-3 text-center">
+          <div class="kisko-us alert alert-primary">
+            <h3>Kisko Us</h3>
+            <p id="kisko-us">Nothing to Report</p>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="col-sm">
+      
+        <div class="mt-5 mx-3 text-center">
+          <div class="kisko-uk alert alert-primary">
+            <h3>Kisko Uk</h3>
+            <p id="kisko-uk">Nothing to Report</p>
+          </div>
+        </div>
+      
+      </div>
+
+      <div class="col-sm">
+      
+        <div class="mt-5 mx-3 text-center">
+          <div class="kisko-in alert alert-primary">
+            <h3>Kisko In</h3>
+            <p id="kisko-in">Nothing to Report</p>
+          </div>
+        </div>
+      
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-sm">
+  
+        <div class="mt-5 mx-3 text-center">
+          <div class="arab-news alert alert-primary">
+            <h3>Arab News</h3>
+            <p id="arab-news">Nothing to Report</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-sm">
+      
+        <div class="mt-5 mx-3 text-center">
+          <div class="pakistan-today alert alert-primary">
+            <h3>Pakistan Today</h3>
+            <p id="pakistan-today">Nothing to Report</p>
+          </div>
+        </div>
+      
+      </div>
+
+
+    </div>
+  </div>
+
+
+
+</body>
+
+<script src="getDate.js"></script>
+</html>
